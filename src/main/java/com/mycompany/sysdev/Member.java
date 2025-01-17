@@ -27,6 +27,14 @@ public class Member {
         this.birthDate = birthDate;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Member member = (Member) obj;
+        return Objects.equals(id, member.id);
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -253,10 +261,7 @@ class MemberManager {
      *                      - CSVファイル保存中にIOExceptionが発生する可能性がある。
      *                      - 削除成功時にはコンソールに確認メッセージが表示される。
      */
-    public boolean deleteMemberById() {
-        // ユーザーに会員IDを入力してもらう
-        System.out.println("削除する会員の会員IDを入力してください。");
-        String memberId = System.console().readLine();
+    public boolean deleteMemberById(String memberId) {
         // 会員IDが存在するか確認
         if (!isMemberValid(memberId)) {
             System.out.println("会員IDが存在しません。");
@@ -269,11 +274,12 @@ class MemberManager {
             return false;
         }
         // 会員情報を削除
-        this.members.remove(member);
+        
         // CSVファイルに保存
         try {
+            this.members.remove(member);
+            System.out.println("会員情報を削除しました: " + this.members);
             this.saveMembers();
-            System.out.println("会員情報を削除しました: " + member);
             return true;
         } catch (IOException e) {
             System.out.println("会員情報の保存中にエラーが発生しました: " + e.getMessage());
