@@ -29,6 +29,7 @@ public class Menu {
             System.out.println("1: レンタルメニュー");
             System.out.println("2: 会員情報管理メニュー");
             System.out.println("3: 商品情報管理メニュー");
+            System.out.println("4: おすすめ");
             System.out.println("0: 終了");
             System.out.print("入力＞ ");
             int choice = scanner.nextInt();
@@ -44,6 +45,9 @@ public class Menu {
                     break;
                 case 3:
                     goods.goodsManageMenu(scanner); // 商品情報管理メニューへ
+                    break;
+                case 4:
+                    Reco.Recommend();
                     break;
                 case 0:
                     if (confirmExit()) {
@@ -210,7 +214,7 @@ public class Menu {
             case 1:
                 String memberId = memberManager.addMember(member.getName(), member.getAddress(), member.getPhone(), member.getBirthDate());
                 if (memberId != null) {
-                    System.out.println("会員を登録しました。会員ID: " + memberId);
+                    System.out.println("会員ID: " + memberId);
                 } else {
                     System.out.println("会員情報の保存中にエラーが発生しました。");
                 }
@@ -370,9 +374,9 @@ public class Menu {
             member.setAddress(address);
             member.setPhone(phoneNumber);
             member.setBirthDate(birthDate);
-            System.out.println("会員情報を変更しました。");
             try {
                 memberManager.saveMembers();
+                System.out.println("会員情報を変更しました。" + member.getId() + " " + member.getName() + " " + member.getAddress() + " " + member.getPhone() + " " + member.getBirthDate());
             } catch (IOException e) {
                 System.out.println("会員情報の保存中にエラーが発生しました。");
             }

@@ -148,11 +148,24 @@ class MemberManager {
     *                      - membersリストの各MemberオブジェクトはtoString() メソッドでCSV形式に変換される。
     */
     public void saveMembers() throws IOException {
+
+        if(true){
+            
+        }
+
+
+
+        //System.out.println("会員情報のテストです：" + this.members);
+
+
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Member member : this.members) {
                 writer.write(member.toString());
                 writer.newLine();
             }
+        }catch(IOException e){
+            System.out.println("会員情報の保存中にエラーが発生しました: " + e.getMessage());
         }
     }
 
@@ -187,7 +200,6 @@ class MemberManager {
         // Save members to file
         try {
             this.saveMembers();
-            System.out.println("会員を追加しました: " + newMember);
             return memberId;
         } catch (IOException e) {
             System.out.println("会員情報の保存中にエラーが発生しました: " + e.getMessage());
@@ -211,7 +223,6 @@ class MemberManager {
      */
     String generateMemberId(String today) {
         String memberId = "99" + today + String.format("%02d", getMembersCount(today));
-        System.out.println("新規会員IDを生成しました: " + memberId);
         return memberId;
     }
 
