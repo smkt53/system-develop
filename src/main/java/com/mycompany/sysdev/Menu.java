@@ -40,7 +40,6 @@ public class Menu {
                     rentalMenu();
                     break;
                 case 2:
-                    //System.out.println("会員情報管理メニューは未実装です。");  
                     memberManagementMenu(); // 会員情報管理メニューへ
                     break;
                 case 3:
@@ -153,33 +152,33 @@ public class Menu {
      *                      - 入力された電話番号や生年月日に対するバリデーションは行われていないため、必要に応じて追加すること。
      */   
     private static Member inputNewMember() {
-        System.out.println("***** 新規会員情報入力 *****");
-        System.out.println("新規会員情報を入力してください。");
-        System.out.print("名前＞ ");
-        String name = scanner.nextLine();
-        System.out.print("住所＞ ");
-        String address = scanner.nextLine();
-        System.out.print("電話番号＞ ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("生年月日（yyyyMMdd）＞");
-        String birthDate = scanner.nextLine();
+        while(true){
+            System.out.println("***** 新規会員情報入力 *****");
+            System.out.println("新規会員情報を入力してください。");
+            System.out.print("名前＞ ");
+            String name = scanner.nextLine();
+            System.out.print("住所＞ ");
+            String address = scanner.nextLine();
+            System.out.print("電話番号＞ ");
+            String phoneNumber = scanner.nextLine();
+            System.out.print("生年月日（yyyyMMdd）＞");
+            String birthDate = scanner.nextLine();
 
-        System.out.println("**********************");
-        System.out.println("1: 確定");
-        System.out.println("0: 会員情報管理メニューに戻る");
-        System.out.print("入力＞ ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // 改行を消費
-        switch (choice) {
-            case 1:
-                break;
-            case 0:
-                return null; // 会員情報管理メニューに戻る
-            default:
-                System.out.println("無効な入力です。再度入力してください。");
+            System.out.println("**********************");
+            System.out.println("1: 確定");
+            System.out.println("0: 会員情報管理メニューに戻る");
+            System.out.print("入力＞ ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 改行を消費
+            switch (choice) {
+                case 1:
+                    return new Member("", name, address, phoneNumber, birthDate);
+                case 0:
+                    return null; // 会員情報管理メニューに戻る
+                default:
+                    System.out.println("無効な入力です。再度入力してください。");
+            }
         }
-        
-        return new Member("", name, address, phoneNumber, birthDate);
         
     }
 
@@ -197,34 +196,36 @@ public class Menu {
      *                      - 会員情報の保存中に IOException が発生した場合、エラーメッセージを表示する。
      */
     private static void confirmAndRegisterMember(Member member) {
-        System.out.println("***** 新規会員情報確認 *****");
-        System.out.println("以下の情報で登録します。");
-        System.out.println("名前: " + member.getName());
-        System.out.println("住所: " + member.getAddress());
-        System.out.println("電話番号: " + member.getPhone());
-        System.out.println("生年月日: " + member.getBirthDate());
+        while(true){
+            System.out.println("***** 新規会員情報確認 *****");
+            System.out.println("以下の情報で登録します。");
+            System.out.println("名前: " + member.getName());
+            System.out.println("住所: " + member.getAddress());
+            System.out.println("電話番号: " + member.getPhone());
+            System.out.println("生年月日: " + member.getBirthDate());
 
-        System.out.println("**********************");
-        System.out.println("1: 確定");
-        System.out.println("2: 変更");
-        System.out.print("入力＞ ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // 改行を消費
-        switch (choice) {
-            case 1:
-                String memberId = memberManager.addMember(member.getName(), member.getAddress(), member.getPhone(), member.getBirthDate());
-                if (memberId != null) {
-                    System.out.println("会員ID: " + memberId);
-                } else {
-                    System.out.println("会員情報の保存中にエラーが発生しました。");
+            System.out.println("**********************");
+            System.out.println("1: 確定");
+            System.out.println("2: 変更");
+            System.out.print("入力＞ ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 改行を消費
+            switch (choice) {
+                case 1:
+                    String memberId = memberManager.addMember(member.getName(), member.getAddress(), member.getPhone(), member.getBirthDate());
+                    if (memberId != null) {
+                        System.out.println("会員ID: " + memberId);
+                    } else {
+                        System.out.println("会員情報の保存中にエラーが発生しました。");
+                    }
+                    break;
+                case 2:
+                    inputNewMember();
+                    break;
+                default:
+                    System.out.println("無効な入力です。最初から入力してください。");
                 }
-                break;
-            case 2:
-                inputNewMember();
-                break;
-            default:
-                System.out.println("無効な入力です。最初から入力してください。");
-            }
+        }
     }
     /*
      * 関数名            : modifyOrDeleteMemberFlow
@@ -244,29 +245,32 @@ public class Menu {
         String memberId = null;
         int choice = 1;
         if(memberIds == null){
-            System.out.println("***** 会員ID入力 *****");
-            System.out.print("会員IDを入力してください＞ ");
-            memberId = scanner.nextLine();
-    
-            //D-1124
-            System.out.println("**********************");
-            System.out.println("1: 確定");
-            System.out.println("0: 会員情報管理メニューに戻る");
-            System.out.print("入力＞ ");
-            int choice2 = scanner.nextInt();
-            scanner.nextLine(); // 改行を消費
-            switch (choice2) {
-                case 1:
-                    break;  //確定します 
-                case 0:
-                    return; // 会員情報管理メニューに戻る
-                default:
-                    System.out.println("無効な入力です。再度入力してください。");
-            }
-            if (!memberManager.isMemberValid(memberId)) {
-                System.out.println("会員IDが見つかりません。再度入力してください。");
-                return;
-            }    
+            outloop:
+            while(true){
+                System.out.println("***** 会員ID入力 *****");
+                System.out.print("会員IDを入力してください＞ ");
+                memberId = scanner.nextLine();
+        
+                //D-1124
+                System.out.println("**********************");
+                System.out.println("1: 確定");
+                System.out.println("0: 会員情報管理メニューに戻る");
+                System.out.print("入力＞ ");
+                int choice2 = scanner.nextInt();
+                scanner.nextLine(); // 改行を消費
+                switch (choice2) {
+                    case 1:
+                        if (!memberManager.isMemberValid(memberId)) {
+                            System.out.println("会員IDが見つかりません。再度入力してください。");
+                            continue;
+                        }
+                        break outloop;  //確定します 
+                    case 0:
+                        return; // 会員情報管理メニューに戻る
+                    default:
+                        System.out.println("無効な入力です。再度入力してください。");
+                }
+            }             
         }else {
             memberId = memberIds;
         }
@@ -367,17 +371,26 @@ public class Menu {
         System.out.println("住所: " + address);
         System.out.println("電話番号: " + phoneNumber);
         System.out.println("生年月日: " + birthDate);
+        if(name.equals("")){
+            name = member.getName();
+        }
+        if(address.equals("")){
+            address = member.getAddress();
+        }
+        if(phoneNumber.equals("")){
+            phoneNumber = member.getPhone();
+        }
+        if(birthDate.equals("")){
+            birthDate = member.getBirthDate();
+        }
+        System.out.println("**********************");
         System.out.print("変更しますか？(Y / N)＞ ");
         String input = scanner.nextLine().trim().toUpperCase();
         if (input.equals("Y")) {
-            member.setName(name);
-            member.setAddress(address);
-            member.setPhone(phoneNumber);
-            member.setBirthDate(birthDate);
             try {
-                memberManager.saveMembers();
-                System.out.println("会員情報を変更しました。" + member.getId() + " " + member.getName() + " " + member.getAddress() + " " + member.getPhone() + " " + member.getBirthDate());
-            } catch (IOException e) {
+                memberManager.deleteAndAddMember(member.getId(), name, address, phoneNumber, birthDate);
+                System.out.println("会員情報を変更しました。" + member.getId());
+            } catch (Exception e) {
                 System.out.println("会員情報の保存中にエラーが発生しました。");
             }
             memberIds = null;

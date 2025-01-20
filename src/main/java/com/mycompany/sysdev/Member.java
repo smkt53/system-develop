@@ -148,17 +148,6 @@ class MemberManager {
     *                      - membersリストの各MemberオブジェクトはtoString() メソッドでCSV形式に変換される。
     */
     public void saveMembers() throws IOException {
-
-        if(true){
-            
-        }
-
-
-
-        //System.out.println("会員情報のテストです：" + this.members);
-
-
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Member member : this.members) {
                 writer.write(member.toString());
@@ -205,8 +194,34 @@ class MemberManager {
             System.out.println("会員情報の保存中にエラーが発生しました: " + e.getMessage());
             return null;
         }
-
     }
+
+    /*
+     * 追加した関数
+     * 関数：deleteAndAddMember
+     * 機能：会員情報を更新する
+     * 入力パラメータ：
+     *     String id : 会員ID
+     *    String name : 会員の名前
+     *   String address : 会員の住所
+     *    String phone : 会員の電話番号
+     *   String birthDate : 会員の生年月日
+     * 出力パラメータ：なし
+     * 戻り値：なし
+     * 特記事項：
+     *   
+     */
+    public void deleteAndAddMember(String id, String name, String address, String phone, String birthDate){
+        deleteMemberById(id);
+        Member member = new Member(id, name, address, phone, birthDate);
+        this.members.add(member);
+        try{
+            this.saveMembers();
+        }catch(IOException e){
+            System.out.println("会員情報の保存中にエラーが発生しました: " + e.getMessage());
+        }
+    }
+    
     /*
      * 関数名            : generateMemberId
      * 機能              : 新規の会員IDを生成する
@@ -289,18 +304,12 @@ class MemberManager {
         // CSVファイルに保存
         try {
             this.members.remove(member);
-            System.out.println("会員情報を削除しました: " + this.members);
             this.saveMembers();
             return true;
         } catch (IOException e) {
             System.out.println("会員情報の保存中にエラーが発生しました: " + e.getMessage());
             return false;
         }
-    }
-
-    // Get all members
-    public List<Member> getMembers() {
-        return new ArrayList<>(this.members); // Return a copy of the members list
     }
 
     // Get the count of members
