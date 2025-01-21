@@ -196,9 +196,10 @@ public class Menu {
      *                      - 会員情報の保存中に IOException が発生した場合、エラーメッセージを表示する。
      */
     private static void confirmAndRegisterMember(Member member) {
+        outloop:
         while(true){
             System.out.println("***** 新規会員情報確認 *****");
-            System.out.println("以下の情報で登録します。");
+            System.out.println("以下の情報で登録しますか？");
             System.out.println("名前: " + member.getName());
             System.out.println("住所: " + member.getAddress());
             System.out.println("電話番号: " + member.getPhone());
@@ -218,10 +219,10 @@ public class Menu {
                     } else {
                         System.out.println("会員情報の保存中にエラーが発生しました。");
                     }
-                    break;
+                    break outloop;
                 case 2:
                     inputNewMember();
-                    break;
+                    break outloop;
                 default:
                     System.out.println("無効な入力です。最初から入力してください。");
                 }
