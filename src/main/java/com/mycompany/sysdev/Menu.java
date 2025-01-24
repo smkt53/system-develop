@@ -172,6 +172,16 @@ public class Menu {
             scanner.nextLine(); // 改行を消費
             switch (choice) {
                 case 1:
+                    // 電話番号が11桁であるか確認する
+                    if ((phoneNumber.length() != 11)||(phoneNumber.length() != 10)) {
+                        System.out.println("電話番号は11桁もしくは11桁で入力してください。");
+                        continue;
+                    }
+                    // 生年月日が8桁であるか確認する
+                    if (birthDate.length() != 8) {
+                        System.out.println("生年月日は8桁で入力してください。");
+                        continue;
+                    }
                     return new Member("", name, address, phoneNumber, birthDate);
                 case 0:
                     return null; // 会員情報管理メニューに戻る
@@ -366,7 +376,6 @@ public class Menu {
 
         //D-1128
         System.out.println("***** 会員情報変更内容確認 *****");
-
         System.out.println("以下の情報に変更します。");
         System.out.println("名前: " + name);
         System.out.println("住所: " + address);
@@ -448,7 +457,7 @@ public class Menu {
         if (birthDate.length() == 8) {
             return birthDate.substring(0, 4) + "/" + birthDate.substring(4, 6) + "/" + birthDate.substring(6, 8);
         }
-        return birthDate; // Return original if invalid
+        return birthDate;
     }
 
     private static boolean confirmExit() {
