@@ -27,7 +27,7 @@ public class Reco {
         }
 
         while (true) {
-            System.out.println("***** おすすめ検索 *****");
+            System.out.println("***** おすすめ検索メニュー *****");
             System.out.println("1: おすすめジャンル");
             System.out.println("2: おすすめシリーズ");
             System.out.println("0: スタッフメインメニューに戻る");

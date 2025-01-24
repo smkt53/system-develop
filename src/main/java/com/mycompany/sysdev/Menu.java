@@ -29,7 +29,7 @@ public class Menu {
             System.out.println("1: レンタルメニュー");
             System.out.println("2: 会員情報管理メニュー");
             System.out.println("3: 商品情報管理メニュー");
-            System.out.println("4: おすすめ");
+            System.out.println("4: おすすめ検索メニュー");
             System.out.println("0: 終了");
             System.out.print("入力＞ ");
             int choice = scanner.nextInt();
