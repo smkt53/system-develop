@@ -173,7 +173,7 @@ public class Menu {
             switch (choice) {
                 case 1:
                     // 電話番号が11桁であるか確認する
-                    if ((phoneNumber.length() != 11)||(phoneNumber.length() != 10)) {
+                    if ((phoneNumber.length() != 11)&(phoneNumber.length() != 10)) {
                         System.out.println("電話番号は11桁もしくは11桁で入力してください。");
                         continue;
                     }
