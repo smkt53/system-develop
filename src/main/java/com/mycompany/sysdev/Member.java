@@ -238,11 +238,8 @@ class MemberManager {
      */
     String generateMemberId(String today) {
         String memberId = "99" + today + String.format("%02d", getMembersCount(today));
-        while(true){
-            if(searchMemberById(memberId) != null){
-                memberId += 1;
-            }else 
-                break;
+        while(searchMemberById(memberId) != null){
+            memberId += 1;
         }
         return memberId;
     }
